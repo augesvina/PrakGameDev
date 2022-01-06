@@ -12,7 +12,7 @@ class Block(pygame.sprite.Sprite):
 # PART E
 
 
-class Player(Block):
+class Player(Block): #implementasi AI dalam class ini adalah pada fungsi collisions, reset_ball dan restart_counter
     def __init__(self, path, x_pos, y_pos, speed):
         super().__init__(path, x_pos, y_pos)
         self.speed = speed
@@ -48,7 +48,7 @@ class Ball(Block):
             self.restart_counter()
 # PART G
 
-    def collisions(self):
+    def collisions(self): #fungsi ini adalah untuk mendeteksi adanya tabrakan antara 2 objek atau lebih yang dideklarasikan menggunakan suatu kondisi
         if self.rect.top <= 0 or self.rect.bottom >= screen_height:
             pygame.mixer.Sound.play(plob_sound)
             self.speed_y *= -1
@@ -69,7 +69,7 @@ class Ball(Block):
                 self.speed_y *= -1
 # PART B
 
-    def reset_ball(self):
+    def reset_ball(self): #fungsi yang menambahkan keputusan diikuti dengan deklarasi baru
         self.active = False
         self.speed_x *= random.choice((-1, 1))
         self.speed_y *= random.choice((-1, 1))
@@ -78,7 +78,7 @@ class Ball(Block):
         pygame.mixer.Sound.play(score_sound)
 # PART M
 
-    def restart_counter(self):
+    def restart_counter(self): #fungsi yang mengatur ulang jarak counter dengan mengindetifikasikan lingkungan dari class objek dan membuat kondisi baru
         current_time = pygame.time.get_ticks()
         countdown_number = 3
 
@@ -120,14 +120,14 @@ class Opponent(Block):
 # PART H
 
 
-class GameManager:
+class GameManager: #dalam class ini terdapat implementasi AI yaitu pada fungsi run_game, reset_ball, dan draw score
     def __init__(self, ball_group, paddle_group):
         self.player_score = 0
         self.opponent_score = 0
         self.ball_group = ball_group
         self.paddle_group = paddle_group
 
-    def run_game(self):
+    def run_game(self): #disini perlu pengamatan dalam lingkungan game yaitu menggambarkan objek dalam game kemudian mengupdate situasi yang harus dilakukan objek
         # Drawing the game objects
         self.paddle_group.draw(screen)
         self.ball_group.draw(screen)
@@ -139,7 +139,7 @@ class GameManager:
         self.draw_score()
 # PART J
 
-    def reset_ball(self):
+    def reset_ball(self): #terdapat kondisi yang memungkinkan objek untuk membuat suatu perhitungan dari kejadian yang dilakukan oleh objek
         if self.ball_group.sprite.rect.right >= screen_width:
             self.opponent_score += 1
             self.ball_group.sprite.reset_ball()
@@ -147,7 +147,7 @@ class GameManager:
             self.player_score += 1
             self.ball_group.sprite.reset_ball()
 
-    def draw_score(self):
+    def draw_score(self): #fungsi ini adalah bentuk hasil keputusan dari sebuah kondisi yang telah diamati dari lingkungannya.
         player_score = basic_font.render(
             str(self.player_score), True, accent_color)
         opponent_score = basic_font.render(
